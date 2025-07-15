@@ -1,0 +1,11 @@
+- name: Add Ansible User
+  user:
+    name: ansible
+    password: "{{ ansible_password | password_hash('sha512') }}"
+    create_home: true
+    groups:
+      - sudo
+    append: yes
+    shell: "{{ shell }}"
+    update_password: on_create
+    state: present

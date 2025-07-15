@@ -1,0 +1,58 @@
+---
+server:
+  children:
+    pre_setup:
+      children:
+        linux_servers:
+          hosts:
+            hyperviser:
+              ansible_host: 192.168.1.x
+            nas:
+              ansible_host: 192.168.1.x
+            dns:
+              ansible_host: 192.168.1.x
+            photo:
+              ansible_host: 192.168.1.x
+            web:
+              ansible_host: 192.168.1.x
+            compute:
+              ansible_host: 192.168.1.x
+            docker:
+              ansible_host: 192.168.1.x
+        free_bsd_servers:
+          hosts:
+            router:
+              ansible_host: 192.168.1.x
+      vars:
+        ansible_user: "sam"
+        ansible_password: "{{ password }}"
+
+    post_setup:
+      children:
+        linux_servers:
+          hosts:
+            hyperviser:
+              ansible_host: 10.x.x.x
+            nas:
+              ansible_host: 10.x.x.x
+            dns:
+              ansible_host: 10.x.x.x
+            photo:
+              ansible_host: 10.x.x.x
+            web:
+              ansible_host: 10.x.x.x
+            compute:
+              ansible_host: 10.x.x.x
+            docker:
+              ansible_host: 10.x.x.x
+        free_bsd_servers:
+          hosts:
+            router:
+              ansible_host: 10.x.x.x
+      vars:
+        ansible_user: "ansible"
+        ansible_ssh_private_key_file: ""
+
+  vars:
+    ansible_connection: ssh
+    ansible_port: 22

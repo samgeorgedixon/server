@@ -1,0 +1,22 @@
+---
+shell: "/bin/bash"
+
+basic_apps:
+  - sudo
+  - vim
+  - ufw
+  - curl
+  - wget
+
+users:
+  - name: admin
+    password: "admin2010"
+    groups: sudo
+    home: yes
+  - name: ansible
+    password: "ansible2010"
+    groups: sudo
+    home: yes
+  - name: sam
+    password: "2310"
+    home: yes

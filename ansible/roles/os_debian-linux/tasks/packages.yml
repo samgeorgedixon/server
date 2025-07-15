@@ -1,0 +1,9 @@
+---
+- name: Update
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Install Basic Apps
+  apt:
+    name: "{{ basic_apps }}"

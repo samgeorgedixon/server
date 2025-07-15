@@ -1,0 +1,33 @@
+---
+- name: Copy Keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', item.key) }}"
+    state: present
+  loop: "{{ keys }}"
+  loop_control:
+        loop_var: item
+
+- name: Disable Password Autho
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^#PasswordAuthentication yes"
+    line: "PasswordAuthentication no"
+
+- name: Change Port
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^#Port 22"
+    line: "Port 22"
+
+- name: Disable Root Login
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "^#PermitRootLogin prohibit-password"
+    line: "PermitRootLogin no"
+
+- name: Restart SSHD
+  service:
+    name: sshd
+    state: restarted
+  become: true

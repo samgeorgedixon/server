@@ -1,0 +1,9 @@
+---
+- name: Update
+  apt:
+    update_cache: yes
+    upgrade: yes
+
+- name: Install Needed Apps
+  apt:
+    name: "{{ needed_apps }}"

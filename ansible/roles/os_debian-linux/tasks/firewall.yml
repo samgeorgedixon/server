@@ -1,0 +1,24 @@
+---
+- name: Allow SSH
+  ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+  ignore_errors: true
+
+- name: Outgoing allow
+  ufw:
+    direction: outgoing
+    policy: allow
+  ignore_errors: true
+
+- name: Incoming deny
+  ufw:
+    direction: incoming
+    policy: deny
+  ignore_errors: true
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+  ignore_errors: true

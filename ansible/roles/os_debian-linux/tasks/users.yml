@@ -1,0 +1,19 @@
+---
+- name: Lock root
+  user:
+    name: root
+    password: "!"
+
+- name: Add Users
+  user:
+    name: "{{ item.name }}"
+    password: "{{ item.password | password_hash('sha512') }}"
+    create_home: "{{ item.home | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    append: yes
+    shell: "{{ shell }}"
+    update_password: on_create
+    state: present
+  loop: "{{ users }}"
+  loop_control:
+        loop_var: item

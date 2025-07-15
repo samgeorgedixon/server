@@ -1,0 +1,14 @@
+---
+shell: "/bin/bash"
+
+needed_apps:
+  - sudo
+  - vim
+
+ansible_password: "ansible2010"
+
+keys:
+  - name: sam
+    key: "/mnt/n/server/keys/sam_id-rsa.pub"
+  - name: ansible
+    key: "/mnt/n/server/keys/ansible_id-rsa.pub"

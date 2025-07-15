@@ -1,0 +1,12 @@
+---
+- name: Bootstrap Hyperviser
+  hosts: linux_servers
+  become: yes
+  become_method: su
+  become_user: root
+  
+  vars:
+    ansible_password: "ansible2010"
+
+  roles:
+    - role: bootstrap_debian-linux
