@@ -76,9 +76,9 @@
 2. Services / Network
   - OS's
   - Network (Hardware + Software)
-    - 
+    - .
 3. Setup / Maintenance
   - OS's (Again for Maintenance)
   - Services
-    - 
+    - .
   - Updates
