@@ -28,7 +28,7 @@
   - DHCP with Static Mappings
   - Monitoring
 
-- Documentation (Ansible)
+- Documentation (Ansible + Steps)
 
 ## Services
 - NAS (Truenas Scale)
@@ -43,6 +43,7 @@
 - VPN Server (OpenVPN Pfsense)
 - Photos Server (Immich)
 - Dashboard (Glance / Homarr / Homer)
+- Kubernetes
 
 ## Structure
 - Server: (Hyperviser - Proxmox)
@@ -51,17 +52,15 @@
       - VPN Server (OpenVPN)
     - NAS (Truenas Scale)
     - DNS Server (bind9)
-    - Photos Server (Immich)
     - Web Server
     - Compute
-    - Monitoring (Granfana)
   - Docker: (Lazy Docker / Portainer)
     - Dashboard (Glance / Homarr / Homer)
     - Reverse Proxy (Nginx Proxy Manager)
+    - Photos Server (Immich)
+    - Monitoring (Granfana)
 
-## Ansible
-
-### Steps
+## Ansible Steps
 1. Setup Hyperviser (Proxmox)
   - OS
     - Update
@@ -76,9 +75,109 @@
 2. Services / Network
   - OS's
   - Network (Hardware + Software)
-    - .
 3. Setup / Maintenance
   - OS's (Again for Maintenance)
   - Services
-    - .
   - Updates
+
+## Build Steps
+1. Setup Hyperviser:
+  - Bootstrap(Ansible)
+  - Add "admin" User to Proxmox
+  - Setup OS (Ansible)
+  - Setup Proxmox:
+    - Download ISO's: debian, truenas_scale, pfsense,
+    - Create VM's
+  - Docker (Ansible)
+    - Dashboard (Glance / Homarr / Homer)
+    - Reverse Proxy (Nginx Proxy Manager)
+    - Photos Server (Immich)
+    - Monitoring (Granfana)
+2. Configure Services:
+  - Install VM's
+  - Bootstrap + Setup OS's (Ansible)
+  - Configure:
+    - PfSense (Configuration File)
+    - Truenas Scale (Configuration File)
+    - Bind9 (Ansible)
+3. Network
+  - Switch Network (Hardware)
+  - Configure Network (Ansible)
+4. Maintenance (Ansible)
+
+## VM's
+1. TrueNAS Scale
+  - Name:       nas
+  - VMID:       100
+  - Boot Start: true
+  - ISO:        truenas_scale.iso
+  - Qemu Agent: true
+  - Disk Size:  32 GiB
+  - Cores:      2
+  - Memory:     8192 Mib
+
+2. Pfsense
+  - Name:       router
+  - VMID:       105
+  - Boot Start: true
+  - ISO:        pfsense.iso
+  - Qemu Agent: true
+  - Disk Size:  16 GiB
+  - Cores:      2
+  - Memory:     2048 Mibs
+
+2. Bind9
+  - Name:       dns
+  - VMID:       110
+  - Boot Start: true
+  - ISO:        debian.iso
+  - Qemu Agent: true
+  - Disk Size:  16 GiB
+  - Cores:      2
+  - Memory:     2048 Mibs
+
+## Hardware
+1. Server
+  - Hostname:   server
+  - CPU:        4 Core - 3.2GHz (Intel i5-4590)
+  - Memory:     24 GB
+  - Drives:
+    - 2 TB HDD - SATA (Boot)
+    - 1 TB HDD - SATA (Data Raid)
+    - 1 TB HDD - SATA/USB (Data Raid)
+    - 1 TB HDD - USB (Data Raid)
+
+2. Desktop
+  - Hostname:   desktop-sam
+  - Drives:
+    - 256 GB SSD (Boot: C)
+    - 2 TB HDD:
+      - 1 TB Part (Data: D)
+      - 1 TB Part (Programs: E)
+
+3. HP Switch
+  - Hostname:   switch-hp
+
+4. WAP
+5. ISP Router
+
+## Hardware Current
+1. Server
+  - Hostname:   server-0
+  - CPU:        4 Core - 3.2GHz (Intel i5-4590)
+  - Memory:     24 GB
+  - Drives:
+    - 500 GB HDD - SATA (Boot)
+    - 1 TB HDD - SATA (Data Raid)
+    - 1 TB HDD - USB (Data Raid)
+    - 1 TB HDD - USB (Data Raid)
+
+2. Desktop
+  - Hostname:   sam-desktop
+  - CPU:        4 Core - 3.2GHz (Intel i5-6500)
+  - Memory:     8 GB
+  - Drives:
+    - 256 GB SSD - SATA (Boot: C)
+    - 2 TB HDD - USB (Programs: D)
+
+3. HP Switch
