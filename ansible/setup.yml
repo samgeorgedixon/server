@@ -4,7 +4,16 @@
   become: yes
 
   vars:
+    ansible_user: "{{ connect_user }}"
     ansible_ssh_private_key_file: "/mnt/n/server/keys/ansible_id-rsa"
+    ports_open:
+      - 22
+      - 8006
 
   roles:
+    - role: simoncaron.pve_addons
+      vars:
+        pve_addons_remove_enterprise_repo: true
+        pve_addons_add_no_subscription_repo: true
+        pve_addons_remove_subscription_nag: true
     - role: os_debian-linux

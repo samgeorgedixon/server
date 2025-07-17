@@ -1,10 +1,13 @@
 ---
-- name: Allow SSH
+- name: Open Ports
   ufw:
     rule: allow
-    port: "22"
+    port: "{{ item }}"
     proto: tcp
   ignore_errors: true
+  loop: "{{ ports_open }}"
+  loop_control:
+        loop_var: item
 
 - name: Outgoing allow
   ufw:

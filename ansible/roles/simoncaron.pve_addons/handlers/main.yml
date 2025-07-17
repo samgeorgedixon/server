@@ -1,0 +1,10 @@
+---
+- name: Run nag removal script
+  ansible.builtin.command: "bash /usr/local/lib/PVENagRemover/PVENagRemover.sh"
+
+- name: Install/Update theme
+  ansible.builtin.command: "bash /usr/local/lib/PVEDiscordDark/PVEDiscordDarkInstall.sh"
+
+- name: Refresh package cache
+  ansible.builtin.apt:
+    update_cache: true

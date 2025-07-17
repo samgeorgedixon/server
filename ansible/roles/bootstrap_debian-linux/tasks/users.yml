@@ -1,7 +1,7 @@
 - name: Add Ansible User
   user:
     name: ansible
-    password: "{{ ansible_password | password_hash('sha512') }}"
+    password: "{{ ansible_user_password | password_hash('sha512') }}"
     create_home: true
     groups:
       - sudo

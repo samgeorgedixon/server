@@ -8,6 +8,9 @@ basic_apps:
   - curl
   - wget
 
+ports_open:
+  - 22
+
 users:
   - name: admin
     password: "admin2010"
@@ -20,3 +23,11 @@ users:
   - name: sam
     password: "2310"
     home: yes
+
+keys:
+  - name: sam
+    key: "/mnt/n/server/keys/sam_id-rsa.pub"
+  - name: admin
+    key: "/mnt/n/server/keys/sam_id-rsa.pub"
+  - name: ansible
+    key: "/mnt/n/server/keys/ansible_id-rsa.pub"

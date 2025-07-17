@@ -1,12 +1,9 @@
 ---
-- name: Copy Keys
+- name: Copy Ansible Key
   authorized_key:
-    user: "{{ item.name }}"
-    key: "{{ lookup('file', item.key) }}"
+    user: ansible
+    key: "{{ lookup('file', ansible_user_key) }}"
     state: present
-  loop: "{{ keys }}"
-  loop_control:
-        loop_var: item
 
 - name: Disable Password Autho
   lineinfile:

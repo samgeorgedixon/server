@@ -17,3 +17,12 @@
   loop: "{{ users }}"
   loop_control:
         loop_var: item
+
+- name: Copy Keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', item.key) }}"
+    state: present
+  loop: "{{ keys }}"
+  loop_control:
+        loop_var: item

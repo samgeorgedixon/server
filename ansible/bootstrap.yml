@@ -6,7 +6,8 @@
   become_user: root
   
   vars:
-    ansible_password: "ansible2010"
+    ansible_user: "{{ bootstrap_user }}"
+    ansible_password: "admin2010"
 
   roles:
     - role: bootstrap_debian-linux
