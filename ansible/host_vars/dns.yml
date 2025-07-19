@@ -5,6 +5,7 @@ apps:
   - ufw
   - curl
   - wget
+  - tree
   - bind9
   - bind9utils
 

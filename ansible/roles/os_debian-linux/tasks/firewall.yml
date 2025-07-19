@@ -7,7 +7,7 @@
   ignore_errors: true
   loop: "{{ ports_open_tcp }}"
   loop_control:
-        loop_var: item
+    loop_var: item
 
 - name: Open UDP Ports
   ufw:
@@ -17,7 +17,7 @@
   ignore_errors: true
   loop: "{{ ports_open_udp }}"
   loop_control:
-        loop_var: item
+    loop_var: item
 
 - name: Outgoing allow
   ufw:

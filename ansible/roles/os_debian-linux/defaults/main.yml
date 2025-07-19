@@ -7,10 +7,11 @@ apps:
   - ufw
   - curl
   - wget
+  - tree
 
 ports_open_tcp:
   - 22
-ports_open_udp:
+ports_open_udp: []
 
 users:
   - name: admin
@@ -27,8 +28,8 @@ users:
 
 keys:
   - name: sam
-    key: "/mnt/n/server/keys/sam_id-rsa.pub"
+    key: "/mnt/g/server/keys/sam_id-rsa.pub"
   - name: admin
-    key: "/mnt/n/server/keys/sam_id-rsa.pub"
+    key: "/mnt/g/server/keys/sam_id-rsa.pub"
   - name: ansible
-    key: "/mnt/n/server/keys/ansible_id-rsa.pub"
+    key: "/mnt/g/server/keys/ansible_id-rsa.pub"

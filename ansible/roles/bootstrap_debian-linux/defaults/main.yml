@@ -6,4 +6,4 @@ basic_apps:
   - vim
 
 ansible_user_password: "ansible2010"
-ansible_user_key: "/mnt/n/server/keys/ansible_id-rsa.pub"
+ansible_user_key: "/mnt/g/server/keys/ansible_id-rsa.pub"

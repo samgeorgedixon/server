@@ -5,7 +5,7 @@
 
   vars:
     ansible_user: "{{ connect_user }}"
-    ansible_ssh_private_key_file: "/mnt/n/server/keys/ansible_id-rsa"
+    ansible_ssh_private_key_file: "/home/sam/.ssh/ansible_id-rsa"
 
   roles:
     - role: simoncaron.pve_addons
@@ -14,3 +14,9 @@
         pve_addons_add_no_subscription_repo: true
         pve_addons_remove_subscription_nag: true
     - role: os_debian-linux
+    - role: copier
+
+  tasks:
+    - name: Give Admin User Proxmox Administrator Privileges
+      shell: "pveum user add admin@pam && pveum acl modify / --roles Administrator --users admin@pam"
+      ignore_errors: true

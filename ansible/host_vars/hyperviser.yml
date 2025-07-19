@@ -4,3 +4,11 @@ ports_open_tcp:
   - 8006
 
 bootstrap_user: "root"
+
+copies:
+  - src: "/mnt/g/server/iso/debian-12.11.0-amd64-DVD-1.iso"
+    dest: "/var/lib/vz/template/iso/"
+  - src: "/mnt/g/server/iso/TrueNAS-SCALE-25.04.1.iso"
+    dest: "/var/lib/vz/template/iso/"
+  - src: "/mnt/g/server/iso/proxmox-ve_8.4-1.iso"
+    dest: "/var/lib/vz/template/iso/"
