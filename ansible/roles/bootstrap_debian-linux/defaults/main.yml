@@ -1,7 +1,7 @@
 ---
 shell: "/bin/bash"
 
-needed_apps:
+basic_apps:
   - sudo
   - vim
 

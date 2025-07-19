@@ -5,6 +5,6 @@
     upgrade: yes
   ignore_errors: true
 
-- name: Install Needed Apps
+- name: Install Basic Apps
   apt:
-    name: "{{ needed_apps }}"
+    name: "{{ basic_apps }}"

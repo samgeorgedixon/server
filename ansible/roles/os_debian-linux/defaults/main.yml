@@ -1,15 +1,16 @@
 ---
 shell: "/bin/bash"
 
-basic_apps:
+apps:
   - sudo
   - vim
   - ufw
   - curl
   - wget
 
-ports_open:
+ports_open_tcp:
   - 22
+ports_open_udp:
 
 users:
   - name: admin
