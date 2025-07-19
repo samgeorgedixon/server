@@ -101,8 +101,8 @@
     - Truenas Scale (Configuration File)
     - Bind9 (Ansible)
 3. Network
-  - Switch Network (Hardware)
   - Configure Network (Ansible)
+  - Switch Network (Hardware)
 4. Maintenance (Ansible)
 
 ## VM's
