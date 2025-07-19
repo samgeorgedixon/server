@@ -1,11 +1,21 @@
 ---
-- name: Open Ports
+- name: Open TCP Ports
   ufw:
     rule: allow
     port: "{{ item }}"
     proto: tcp
   ignore_errors: true
-  loop: "{{ ports_open }}"
+  loop: "{{ ports_open_tcp }}"
+  loop_control:
+        loop_var: item
+
+- name: Open UDP Ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: udp
+  ignore_errors: true
+  loop: "{{ ports_open_udp }}"
   loop_control:
         loop_var: item
 
