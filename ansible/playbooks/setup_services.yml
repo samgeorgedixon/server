@@ -1,0 +1,11 @@
+---
+- name: Setup Linux Servers
+  hosts: linux_servers
+  become: true
+
+  vars:
+    ansible_user: "{{ connect_user }}"
+    ansible_ssh_private_key_file: "/mnt/n/server/keys/ansible_id-rsa"
+
+  roles:
+    - role: os_debian-linux

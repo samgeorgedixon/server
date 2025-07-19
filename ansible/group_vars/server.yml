@@ -1,0 +1,6 @@
+---
+ansible_connection: ssh
+ansible_port: 22
+
+connect_user: "ansible"
+bootstrap_user: "ansible"

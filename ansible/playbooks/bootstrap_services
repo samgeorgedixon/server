@@ -1,0 +1,13 @@
+---
+- name: Bootstrap Linux Servers
+  hosts: linux_servers
+  become: true
+  become_method: su
+  become_user: root
+  
+  vars:
+    ansible_user: "{{ bootstrap_user }}"
+    ansible_password: "ansible2010"
+
+  roles:
+    - role: bootstrap_debian-linux

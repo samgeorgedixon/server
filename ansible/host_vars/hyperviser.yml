@@ -1,0 +1,6 @@
+---
+ports_open_tcp:
+  - 22
+  - 8006
+
+bootstrap_user: "root"

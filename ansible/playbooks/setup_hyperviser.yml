@@ -1,14 +1,11 @@
 ---
 - name: Setup Hyperviser
-  hosts: linux_servers
-  become: yes
+  hosts: hyperviser
+  become: true
 
   vars:
     ansible_user: "{{ connect_user }}"
     ansible_ssh_private_key_file: "/mnt/n/server/keys/ansible_id-rsa"
-    ports_open:
-      - 22
-      - 8006
 
   roles:
     - role: simoncaron.pve_addons

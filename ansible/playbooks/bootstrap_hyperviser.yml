@@ -1,7 +1,7 @@
 ---
 - name: Bootstrap Hyperviser
-  hosts: linux_servers
-  become: yes
+  hosts: hyperviser
+  become: true
   become_method: su
   become_user: root
   
