@@ -37,13 +37,14 @@
 - Hyperviser (Proxmox)
 - Docker (Lazy Docker / Portainer)
 - Web Server
-- Monitoring (Granfana)
+- Monitoring / Logs (Granfana)
 - Compute
 - DNS Server (bind9)
 - VPN Server (OpenVPN Pfsense)
 - Photos Server (Immich)
 - Dashboard (Glance / Homarr / Homer)
 - Kubernetes
+- Caching - DNS / Web
 
 ## Structure
 - Server: (Hyperviser - Proxmox)
@@ -124,7 +125,21 @@
   - Qemu Agent: true
   - Disk Size:  16 GiB
   - Cores:      2
-  - Memory:     2048 Mibs
+  - Memory:     4096 Mibs
+  - Linux Vlan: vmbr0.90
+  - Network:
+    - net0:     bridge=vmbr0
+    - net1:     bridge=vmbr0, tag=90
+  - Installer:
+    - WAN:      vtnet0, dhcp
+    - LAN:      vtnet1, static, 192.168.1.1/24
+    - FileSys:  ZFS, GPT
+    - Version:  Current Stable
+  - Boot Install:
+    - WAN:      vtnet1
+    - LAN:      vtnet0
+      - DHCP:   10.100.0.1 - 10.100.255.254, dns=1.1.1.1
+    - Enable SSH
 
 2. Bind9
   - Name:       dns
@@ -157,6 +172,14 @@
 
 3. HP Switch
   - Hostname:   switch-hp
+  - Ports:
+    - VLAN 1:
+      - 1-23: Untagged
+      - 24:   Excluded
+    - VLAN 90:
+      - 1-22: Excluded
+      - 23:   Tagged
+      - 24:   Untagged
 
 4. WAP
 5. ISP Router

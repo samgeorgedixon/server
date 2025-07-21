@@ -1,0 +1,32 @@
+---
+- name: Change IP
+  lineinfile:
+    dest: "/etc/network/interfaces"
+    regexp: '^(\s*)address .*$'
+    line: '\1address {{ ip_new }}'
+    backrefs: yes
+
+- name: Change Gateway
+  lineinfile:
+    dest: "/etc/network/interfaces"
+    regexp: '^(\s*)gateway .*$'
+    line: '\1gateway {{ gateway_new }}'
+    backrefs: yes
+
+- name: Change Nameserver
+  lineinfile:
+    dest: "/etc/resolv.conf"
+    regexp: '^nameserver .*$'
+    line: 'nameserver {{ nameserver_new }}'
+    backrefs: yes
+
+- name: Change DNS Search
+  lineinfile:
+    dest: "/etc/resolv.conf"
+    regexp: '^search .*$'
+    line: 'search {{ dns_search_new }}'
+
+- name: Restart Networking
+  service:
+    name: networking
+    state: restarted

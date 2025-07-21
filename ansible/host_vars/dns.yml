@@ -14,3 +14,16 @@ ports_open_tcp:
   - 53
 ports_open_udp:
   - 53
+
+copies:
+  - src: "/mnt/g/server/conf/bind9/named.conf"
+    dest: "/etc/bind/"
+  - src: "/mnt/g/server/conf/bind9/named.conf.options"
+    dest: "/etc/bind/"
+  - src: "/mnt/g/server/conf/bind9/named.conf.default-zones"
+    dest: "/etc/bind/"
+  - src: "/mnt/g/server/conf/bind9/server-lan.zone"
+    dest: "/etc/bind/"
+
+restarts:
+  - named

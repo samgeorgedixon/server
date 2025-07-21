@@ -6,3 +6,11 @@
   loop: "{{ copies }}"
   loop_control:
     loop_var: item
+
+- name: Restart Services
+  service:
+    name: "{{ item }}"
+    state: restarted
+  loop: "{{ restarts }}"
+  loop_control:
+    loop_var: item

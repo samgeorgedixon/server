@@ -12,3 +12,10 @@ copies:
     dest: "/var/lib/vz/template/iso/"
   - src: "/mnt/g/server/iso/proxmox-ve_8.4-1.iso"
     dest: "/var/lib/vz/template/iso/"
+  - src: "/mnt/g/server/iso/pfsense_netgate-installer-v1.0-RC-amd64-20240919-1435.iso"
+    dest: "/var/lib/vz/template/iso/"
+
+ip_new: "10.0.0.10/8"
+gateway_new: "10.0.0.1"
+nameserver_new: "10.0.0.1"
+dns_search_new: "router.server.lan"
