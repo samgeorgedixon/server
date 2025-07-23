@@ -1,6 +1,6 @@
 ---
 - name: Bootstrap Linux Servers
-  hosts: dns
+  hosts: docker
   become: true
   become_method: su
   become_user: root

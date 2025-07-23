@@ -1,0 +1,9 @@
+---
+apps:
+  - sudo
+  - vim
+  - ufw
+  - curl
+  - wget
+  - tree
+  - cifs-utils

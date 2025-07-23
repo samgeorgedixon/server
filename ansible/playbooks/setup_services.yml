@@ -1,6 +1,6 @@
 ---
 - name: Setup Linux Servers
-  hosts: dns
+  hosts: dns, docker
   become: true
 
   vars:
@@ -10,3 +10,45 @@
   roles:
     - role: os_debian-linux
     - role: copier
+
+- name: Setup Docker
+  hosts: docker
+  become: true
+
+  vars:
+    ansible_user: "{{ connect_user }}"
+    ansible_ssh_private_key_file: "/home/sam/.ssh/ansible_id-rsa"
+
+    docker_edition: 'ce'
+    docker_packages:
+      - "docker-{{ docker_edition }}"
+      - "docker-{{ docker_edition }}-cli"
+      - "docker-{{ docker_edition }}-rootless-extras"
+    docker_packages_state: present
+    docker_service_manage: true
+    docker_service_state: started
+    docker_service_enabled: true
+    docker_restart_handler_state: restarted
+    docker_install_compose_plugin: true
+    docker_compose_package: docker-compose-plugin
+    docker_compose_package_state: present
+    docker_install_compose: true
+    docker_compose_version: "v2.32.1"
+    docker_compose_arch: "{{ ansible_architecture }}"
+    docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-linux-{{ docker_compose_arch }}"
+    docker_compose_path: /usr/local/bin/docker-compose
+    docker_add_repo: true
+    docker_repo_url: https://download.docker.com/linux
+    docker_apt_release_channel: stable
+    docker_apt_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+    docker_apt_repository: "deb [arch={{ docker_apt_arch }}{{' signed-by=/etc/apt/keyrings/docker.asc' if add_repository_key is not failed}}] {{    docker_repo_url }}/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+    docker_apt_ignore_key_error: True
+    docker_apt_gpg_key: "{{ docker_repo_url }}/{{ ansible_distribution | lower }}/gpg"
+    docker_apt_filename: "docker"
+    pip_install_packages:
+      - name: docker
+
+  roles:
+  - role: geerlingguy.pip
+  - role: geerlingguy.docker
+  - role: docker

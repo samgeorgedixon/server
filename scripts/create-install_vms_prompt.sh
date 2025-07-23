@@ -66,7 +66,7 @@ echo "
     - Qemu Agent: true
     - Disk Size:  32 GiB
     - Cores:      2
-    - Memory:     4096 Mibs
+    - Memory:     8192 Mibs
     - Installer:
       - Hostname: docker
         - Domain: server.lan

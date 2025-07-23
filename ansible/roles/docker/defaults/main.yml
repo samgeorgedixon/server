@@ -1,0 +1,4 @@
+---
+immich_smb_share: "//nas.server.lan/services/immich"
+immich_smb_user: "immich"
+immich_smb_password: "immich2010"

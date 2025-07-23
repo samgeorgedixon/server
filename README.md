@@ -122,7 +122,7 @@
   - VMID:       105
   - Boot Start: true
   - ISO:        pfsense.iso
-  - Qemu Agent: true
+  - Qemu Agent: false
   - Disk Size:  16 GiB
   - Cores:      2
   - Memory:     4096 Mibs
@@ -150,6 +150,30 @@
   - Disk Size:  16 GiB
   - Cores:      2
   - Memory:     2048 Mibs
+  - Installer:
+    - Hostname: dns
+      - Domain: server.lan
+    - User:     ansible
+    - Disk:     Guided Entire Disk
+    - Mirror:   yes
+    - Software: Only: System, SSH
+
+3. Docker
+  - Name:       docker
+  - VMID:       115
+  - Boot Start: true
+  - ISO:        debian.iso
+  - Qemu Agent: true
+  - Disk Size:  32 GiB
+  - Cores:      2
+  - Memory:     8192 Mibs
+  - Installer:
+    - Hostname: docker
+      - Domain: server.lan
+    - User:     ansible
+    - Disk:     Guided Entire Disk
+    - Mirror:   yes
+    - Software: Only: System, SSH
 
 ## Hardware
 1. Server
@@ -183,24 +207,3 @@
 
 4. WAP
 5. ISP Router
-
-## Hardware Current
-1. Server
-  - Hostname:   server-0
-  - CPU:        4 Core - 3.2GHz (Intel i5-4590)
-  - Memory:     24 GB
-  - Drives:
-    - 500 GB HDD - SATA (Boot)
-    - 1 TB HDD - SATA (Data Raid)
-    - 1 TB HDD - USB (Data Raid)
-    - 1 TB HDD - USB (Data Raid)
-
-2. Desktop
-  - Hostname:   sam-desktop
-  - CPU:        4 Core - 3.2GHz (Intel i5-6500)
-  - Memory:     8 GB
-  - Drives:
-    - 256 GB SSD - SATA (Boot: C)
-    - 2 TB HDD - USB (Programs: D)
-
-3. HP Switch

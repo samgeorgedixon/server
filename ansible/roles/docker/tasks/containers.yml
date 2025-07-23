@@ -1,0 +1,38 @@
+---
+- name: Create macvlan Network
+  docker_network:
+    name: "macvlan_network"
+    state: present
+    driver: macvlan
+    driver_options:
+      parent: "enp0s18"
+    ipam_config:
+      - subnet: '10.0.0.0/8'
+        gateway: '10.0.0.1'
+        iprange: '10.2.0.0/16'
+
+- name: Create Homarr Container
+  docker_container:
+    name: homarr
+    image: ghcr.io/homarr-labs/homarr:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /docker-volumes/homarr/appdata:/appdata
+    env:
+      SECRET_ENCRYPTION_KEY: 6b550bb0db7618c57f6e6ca13d2eb9881bd099b89215a589f7ae52251ed21026
+    restart_policy: unless-stopped
+    networks:
+      - name: macvlan_network
+        ipv4_address: 10.2.0.15
+
+- name: Create Nginx Proxy Manager Container
+  docker_container:
+    name: nginx-proxy-manager
+    image: jc21/nginx-proxy-manager:latest
+    volumes:
+      - /docker-volumes/nginx-proxy-manager/data:/data
+      - /docker-volumes/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    restart_policy: unless-stopped
+    networks:
+      - name: macvlan_network
+        ipv4_address: 10.2.0.5

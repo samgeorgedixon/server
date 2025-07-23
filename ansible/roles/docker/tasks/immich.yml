@@ -1,0 +1,94 @@
+---
+- name: Create Immich SMB Share Mount Point
+  file:
+    path: "/mnt/immich"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Create Immich SMB Credentials File
+  copy:
+    dest: "/root/.immich_smb-credentials"
+    content: |
+      username={{ immich_smb_user }}
+      password={{ immich_smb_password }}
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Mount Immich NAS SMB Share
+  lineinfile:
+    dest: "/etc/fstab"
+    line: "{{ immich_smb_share }} /mnt/immich cifs credentials=/root/.immich_smb-credentials 0 0"
+
+- name: Mount Immich Share Temp
+  shell: "sudo mount /mnt/immich"
+  ignore_errors: true
+
+- name: Create Immich Container
+  docker_container:
+    name: immich_server
+    image: ghcr.io/immich-app/immich-server:release
+    volumes:
+      - /mnt/immich:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    env:
+      UPLOAD_LOCATION: /mnt/immich
+      DB_DATA_LOCATION: /docker-volumes/immich/postgres
+      TZ: Europe/London
+      IMMICH_VERSION: release
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+      REDIS_HOSTNAME: '10.2.0.22'
+      DB_HOSTNAME: '10.2.0.23'
+      IMMICH_PORT: "80"
+    restart_policy: unless-stopped
+    networks:
+      - name: macvlan_network
+        ipv4_address: 10.2.0.20
+
+- name: Create Immich Machine-Learning Container
+  docker_container:
+    name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:release
+    volumes:
+      - /docker-volumes/immich/model-cache:/cache
+    env:
+      UPLOAD_LOCATION: /mnt/immich
+      DB_DATA_LOCATION: /docker-volumes/immich/postgres
+      TZ: Europe/London
+      IMMICH_VERSION: release
+      DB_PASSWORD: postgres
+      DB_USERNAME: postgres
+      DB_DATABASE_NAME: immich
+    restart_policy: unless-stopped
+    networks:
+      - name: macvlan_network
+        ipv4_address: 10.2.0.21
+
+- name: Create Immich Redis Container
+  docker_container:
+    name: immich_redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:fec42f399876eb6faf9e008570597741c87ff7662a54185593e74b09ce83d177
+    restart_policy: unless-stopped
+    networks:
+    - name: macvlan_network
+      ipv4_address: 10.2.0.22
+
+- name: Create Immich Database Container
+  docker_container:
+    name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    env:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: immich
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    volumes:
+      - /docker-volumes/immich/postgres:/var/lib/postgresql/data
+    restart_policy: unless-stopped
+    networks:
+    - name: macvlan_network
+      ipv4_address: 10.2.0.23
